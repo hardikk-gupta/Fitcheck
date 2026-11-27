@@ -1,0 +1,11 @@
+services:
+  fitcheck:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import json, urllib.request; assert json.load(urllib.request.urlopen('http://127.0.0.1:3000/api/health', timeout=3))['voiceReady']"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+      start_period: 30s
